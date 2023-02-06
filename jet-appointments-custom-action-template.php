@@ -16,15 +16,15 @@ if ( ! defined( 'JET_APPOINTMENTS_CUSTOM_TEMPLATE__CONFIRM' ) ) {
 }
 
 if ( ! defined( 'JET_APPOINTMENTS_CUSTOM_TEMPLATE__CANCEL' ) ) {
-	define( 'JET_APPOINTMENTS_CUSTOM_TEMPLATE__CANCEL', false );
+	define( 'JET_APPOINTMENTS_CUSTOM_TEMPLATE__CANCEL', 401 );
 }
 
 if ( ! defined( 'JET_APPOINTMENTS_CUSTOM_TEMPLATE__ERROR_CONFIRM' ) ) {
-	define( 'JET_APPOINTMENTS_CUSTOM_TEMPLATE__ERROR_CONFIRM', 1034 );
+	define( 'JET_APPOINTMENTS_CUSTOM_TEMPLATE__ERROR_CONFIRM', false );
 }
 
 if ( ! defined( 'JET_APPOINTMENTS_CUSTOM_TEMPLATE__ERROR_CANCEL' ) ) {
-	define( 'JET_APPOINTMENTS_CUSTOM_TEMPLATE__ERROR_CANCEL', 1034 );
+	define( 'JET_APPOINTMENTS_CUSTOM_TEMPLATE__ERROR_CANCEL', 386 );
 }
 
 final class Plugin {
@@ -63,11 +63,17 @@ final class Plugin {
 		return [
 			[
 				'template' => JET_APPOINTMENTS_CUSTOM_TEMPLATE__CONFIRM,
-				'hook'     => 'jet-apb/public-actions/custom-confirm-page-content',
+				'hook'     => 'jet-apb/public-actions/custom-action-page-content',
+				'validate' => function( $actions ) {
+					return 'confirm' === $actions->get_action();
+				}
 			],
 			[
 				'template' => JET_APPOINTMENTS_CUSTOM_TEMPLATE__CANCEL,
-				'hook'     => 'jet-apb/public-actions/custom-cancel-page-content',
+				'hook'     => 'jet-apb/public-actions/custom-action-page-content',
+				'validate' => function( $actions ) {
+					return 'cancel' === $actions->get_action();
+				}
 			],
 			[
 				'template' => JET_APPOINTMENTS_CUSTOM_TEMPLATE__ERROR_CONFIRM,
